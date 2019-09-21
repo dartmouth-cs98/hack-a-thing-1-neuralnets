@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/siapeng/cs/cs98/hack-a-thing-1-neuralnets/catordog/catordog.model"
+all_model_checkpoint_paths: "/Users/siapeng/cs/cs98/hack-a-thing-1-neuralnets/catordog/catordog.model"

@@ -10,8 +10,6 @@ from tflearn.layers.conv import conv_2d, max_pool_2d
 from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.estimator import regression
 
-#%matplotlib inline
-
 TRAIN_DIR = 'train'
 TEST_DIR = 'test'
 IMG_SIZE = 50
@@ -81,13 +79,20 @@ convnet = input_data(shape=[None, IMG_SIZE, IMG_SIZE, 1], name='input')
 
 # Hidden layer with 32 neurons, stride of 5 (5x5 pixels)
 convnet = conv_2d(convnet, 32, 5, activation='relu')
-
 # Maxpool layer with 64 filters added
 convnet = max_pool_2d(convnet, 5)
+
+# Expand the model with more convolutional and max pool layers
 convnet = conv_2d(convnet, 64, 5, activation='relu')
+convnet = max_pool_2d(convnet, 5)
+convnet = conv_2d(convnet, 128, 5, activation='relu')
+convnet = max_pool_2d(convnet, 5)
+convnet = conv_2d(convnet, 64, 5, activation='relu')
+convnet = max_pool_2d(convnet, 5)
+convnet = conv_2d(convnet, 32, 5, activation='relu')
+convnet = max_pool_2d(convnet, 5)
 
 # Fully connected layer with 1024 neurons added
-convnet = max_pool_2d(convnet, 5)
 convnet = fully_connected(convnet, 1024, activation='relu')
 
 # Dropout layer with a keep probability of 0.8 added
@@ -99,3 +104,5 @@ model = tflearn.DNN(convnet, tensorboard_dir='log', tensorboard_verbose=0)
 model.fit({'input': X_train}, {'targets': y_train}, n_epoch=10,
           validation_set=({'input': X_test}, {'targets': y_test}),
           snapshot_step=500, show_metric=True, run_id=MODEL_NAME)
+
+model.save('catordog.model')
