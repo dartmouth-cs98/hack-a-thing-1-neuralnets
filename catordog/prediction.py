@@ -70,10 +70,11 @@ def create_demo_data():
 
 # train_data = create_train_data()
 # test_data = create_test_data()
-demo_data = create_demo_data()
+#demo_data = create_demo_data()
 # If already created the dataset:
 train_data = np.load('train_data.npy')
 test_data = np.load('test_data.npy')
+demo_data = np.load('demo_data.npy')
 
 # Splitting the data into 24,500 for training and 500 for testing
 train = train_data[:-500]
@@ -134,38 +135,38 @@ model.load('catordog.model')
 # print(f"cat: {prediction[0]}, dog: {prediction[1]}")
 #
 # 2. Predict the first 16 images using matplotlib plt
-# fig=plt.figure(figsize=(16, 12))
-#
-# for num, data in enumerate(test_data[:16]):
-#
-#     img_num = data[1]
-#     img_data = data[0]
-#
-#     y = fig.add_subplot(4, 4, num+1)
-#     orig = img_data
-#     data = img_data.reshape(IMG_SIZE, IMG_SIZE, 1)
-#     model_out = model.predict([data])[0]
-#
-#     if np.argmax(model_out) == 1:
-#         str_label='Dog'
-#     else:
-#         str_label='Cat'
-#
-#     y.imshow(orig, cmap='gray')
-#     plt.title(str_label)
-#     y.axes.get_xaxis().set_visible(False)
-#     y.axes.get_yaxis().set_visible(False)
-# plt.show()
+fig=plt.figure(figsize=(16, 12))
+
+for num, data in enumerate(test_data[:16]):
+
+    img_num = data[1]
+    img_data = data[0]
+
+    y = fig.add_subplot(4, 4, num+1)
+    orig = img_data
+    data = img_data.reshape(IMG_SIZE, IMG_SIZE, 1)
+    model_out = model.predict([data])[0]
+
+    if np.argmax(model_out) == 1:
+        str_label='Dog'
+    else:
+        str_label='Cat'
+
+    y.imshow(orig, cmap='gray')
+    plt.title(str_label)
+    y.axes.get_xaxis().set_visible(False)
+    y.axes.get_yaxis().set_visible(False)
+plt.show()
 
 # 3. Predict newly downloaded image from Google
-d = demo_data[0]
-img_data, img_num = d
-
-data = img_data.reshape(IMG_SIZE, IMG_SIZE, 1)
-prediction = model.predict([data])[0]
-
-fig = plt.figure(figsize=(6, 6))
-ax = fig.add_subplot(111)
-ax.imshow(img_data, cmap="gray")
-print(f"cat: {prediction[0]}, dog: {prediction[1]}")
-plt.show()
+# d = demo_data[0]
+# img_data, img_num = d
+#
+# data = img_data.reshape(IMG_SIZE, IMG_SIZE, 1)
+# prediction = model.predict([data])[0]
+#
+# fig = plt.figure(figsize=(6, 6))
+# ax = fig.add_subplot(111)
+# ax.imshow(img_data, cmap="gray")
+# print(f"cat: {prediction[0]}, dog: {prediction[1]}")
+# plt.show()
